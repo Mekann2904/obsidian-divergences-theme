@@ -2,7 +2,7 @@
 ![Divergences](image.png)
 このテーマでは[obsidian-style-settings](https://github.com/mgmeyers/obsidian-style-settings)プラグインを使用します。
 
-必須ではありませんが、ローカルにある画像を背景として使用する場合は[obsidian-local-vault-server-plugin](https://github.com/Mekann2904/obsidian-local-vault-server-plugin)を使用すると良いでしょう。
+必須ではありませんが、ローカルにある画像を背景として使用する場合は[obsidian-local-vault-server-plugin](https://github.com/Mekann2904/obsidian-local-vault-server-plugin)を使用するのを想定しています。
 
 ## 設定内容
 
