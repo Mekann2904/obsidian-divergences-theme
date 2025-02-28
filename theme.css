@@ -1,0 +1,295 @@
+/* @settings
+name: 背景＆フィルター設定
+id: custom-background-filter
+settings:
+  -
+    id: anp-custom-background-header
+    title: 背景
+    description: デフォルトテーマに適用可能で、カードレイアウトと組み合わせるとより良い効果
+    type: heading
+    level: 1
+    collapsed: true
+  -
+    id: anp-background-image-toggle
+    title: カスタム背景を有効化 (WIP)
+    description: カラフルなフレームとは互換性がありません
+    type: class-toggle
+  -
+    id: anp-custom-background-dark-header
+    title: 詳細設定
+    description: 
+    type: heading
+    level: 1
+    collapsed: true
+  -
+    id: anp-background-image-dark
+    title: カスタム背景画像のURL
+    description: '形式: url("https://リンク-to-image.png")'
+    type: variable-text
+    default: url("https://link-to-image.png")
+  -
+    id: anp-custom-bg-brightness-dark
+    title: 背景の明るさ
+    type: variable-number-slider
+    min: 0
+    max: 2
+    step: 0.05
+    default: 0.8
+  -
+    id: anp-custom-bg-blur-dark
+    title: 背景のぼかし
+    type: variable-number-slider
+    min: 0
+    max: 20
+    step: 0.5
+    default: 0
+    format: px
+  -
+    id: filter-settings-header
+    title: フィルター設定
+    type: heading
+    level: 1
+    collapsed: true
+  -
+    id: filter-color
+    title: フィルターの色
+    description: 背景画像に適用するフィルターの色（RGB値で指定）
+    type: variable-color
+    format: rgb-split
+    default: '#0006FF'
+  -
+    id: filter-opacity
+    title: フィルターの不透明度
+    description: フィルターの不透明度 (0～1)
+    type: variable-number-slider
+    min: 0
+    max: 0.8
+    step: 0.01
+    default: 0.1
+  -
+    id: filter-gradient-enabled
+    title: グラデーションを有効にする
+    description: 単色フィルターの代わりにグラデーションフィルターを使用します
+    type: class-toggle
+  -
+    id: filter-gradient-start
+    title: フィルターの開始色
+    description: グラデーションフィルター使用時の開始色（RGB値で指定）
+    type: variable-color
+    format: rgb-split
+    default: '#000000'
+  -
+    id: filter-gradient-end
+    title: フィルターの終了色
+    description: グラデーションフィルター使用時の終了色（RGB値で指定）
+    type: variable-color
+    format: rgb-split
+    default: '#000000'
+  -
+    id: filter-gradient-angle
+    title: グラデーションの角度
+    description: 'グラデーションフィルター使用時の角度を指定します (例: 180deg)'
+    type: variable-text
+    default: '180deg'
+  -
+    id: recommend-background 
+    title: 推奨壁紙
+    description: 個人的に使用している推奨壁紙
+    type: heading
+    level: 1
+    collapsed: true
+  -
+    id: recommend-background-dark
+    title: 推奨壁紙
+    description: "
+    - まだ未定です。募集しています。  []() "
+    type: info-text
+    markdown: true
+*/
+
+/* 背景＆フィルター設定 */
+body.theme-dark {
+  --anp-background-image: var(--anp-background-image-dark);
+  --anp-custom-bg-brightness: var(--anp-custom-bg-brightness-dark);
+  --anp-custom-bg-blur: var(--anp-custom-bg-blur-dark);
+  --anp-custom-bg-card-fg-opacity: var(--anp-custom-bg-card-fg-opacity-dark);
+  --background-base: 30, 30, 46;
+  --background-mantle: 24, 24, 37;
+}
+
+/* カスタム背景画像とフィルター適用（背景画像部分のみ対象） */
+.anp-background-image-toggle:not(.anp-colorful-frame) {
+  .app-container,
+  &.anp-bg-fix .app-container {
+    position: relative;
+    /* 1層目：フィルター（linear-gradient で指定）
+       2層目：背景画像 */
+    background-image: 
+      linear-gradient(
+        rgba(var(--filter-color-r), var(--filter-color-g), var(--filter-color-b), var(--filter-opacity)),
+        rgba(var(--filter-color-r), var(--filter-color-g), var(--filter-color-b), var(--filter-opacity))
+      ),
+      var(--anp-background-image, url("https://link-to-image.png"));
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+  }
+  .horizontal-main-container,
+  &.anp-bg-fix .horizontal-main-container {
+    backdrop-filter: brightness(var(--anp-custom-bg-brightness, 0.5))
+      blur(var(--anp-custom-bg-blur, 5px));
+    background-color: transparent;
+  }
+  .workspace {
+    background: transparent;
+  }
+  --card-background-color: transparent;
+  --card-foreground-color: rgba(
+    var(--background-base),
+    var(--anp-custom-bg-card-fg-opacity, 0.4)
+  );
+  --tab-inactive-color: rgba(
+    var(--background-mantle),
+    var(--anp-custom-bg-card-fg-opacity, 0.4)
+  );
+  --code-background: var(--my-color-base-00);
+  &.anp-card-layout .workspace-split.mod-root .view-content {
+    background: transparent;
+  }
+}
+
+/* グラデーションフィルター有効時（.filter-gradient-enabled クラスが付与された場合） */
+.anp-background-image-toggle.filter-gradient-enabled:not(.anp-colorful-frame) .app-container,
+.anp-background-image-toggle.filter-gradient-enabled:not(.anp-colorful-frame).anp-bg-fix .app-container {
+  background-image: 
+    linear-gradient(
+      var(--filter-gradient-angle, 90deg),
+      rgba(var(--filter-gradient-start-r), var(--filter-gradient-start-g), var(--filter-gradient-start-b), var(--filter-opacity)),
+      rgba(var(--filter-gradient-end-r), var(--filter-gradient-end-g), var(--filter-gradient-end-b), var(--filter-opacity))
+    ),
+    var(--anp-background-image, url("https://link-to-image.png"));
+}
+
+::-webkit-scrollbar {
+  visibility: hidden;
+  background-color: transparent;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  visibility: hidden;
+}
+
+::-webkit-scrollbar:hover {
+  visibility: initial;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  visibility: initial;
+}
+
+.mod-fade:not(.mod-at-end):after {
+  background: none;
+}
+
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+  border-radius: var(--anp-card-radius, var(--radius-xl));
+  background-color: #110f20c9 !important;
+  margin-top: 1px;
+}
+
+/* @settings
+name: カードレイアウト
+id: card-layout-settings
+settings:
+  -
+    id: anp-layout-select
+    title: ワークスペースレイアウトのバリアント
+    type: class-select
+    allowEmpty: false
+    default: anp-card-layout
+    options:
+      -
+        label: デフォルト
+        value: none
+      -
+        label: カード
+        value: anp-card-layout
+  -
+    id: card-gap-hover
+    title: カード間のアイコンホバー表示を非表示にする
+    type: class-toggle
+    default: true
+*/
+
+.card-gap-hover .workspace-tabs:not(.mod-top) .workspace-tab-header-container {
+  height: 3px;
+  transition: height 200ms ease-in;
+}
+.card-gap-hover .workspace-tabs:not(.mod-top) .workspace-tab-header-container:hover {
+  height: var(--header-height);
+}
+.card-gap-hover .workspace-tabs:not(.mod-top) .workspace-tab-header-container::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+body.anp-card-layout .workspace-split .workspace-leaf-content:not([data-type=file-explorer]),
+body.anp-card-layout.anp-card-layout-filebrowser .workspace-leaf-content[data-type=file-explorer] {
+  border-radius: var(--anp-card-radius, var(--radius-xl));
+  background-color: #110f20c9;
+  border: 1px solid var(--tab-outline-color);
+}
+[data-type="file-explorer"] {
+  background-color: #110f20c9;
+  border-radius: var(--anp-card-radius, var(--radius-xl));
+  margin-bottom: 0px;
+}
+.view-header {
+  background-color: #00000000;
+}
+.theme-dark .graph-view.color-fill-attachment {
+  color: #f58250d5;
+}
+.theme-dark .graph-view.color-fill-tag {
+  color: #50F581;
+}
+.theme-dark .graph-view.color-fill-unresolved {
+  color: #50F581;
+  opacity: 1;
+}
+.graph-view.color-fill {
+  color: #f5f050c9;
+}
+body {
+  --graph-line: #8a5cf5c1;
+  --table-background: var(--my-color-base-00);
+  --tab-background-active: none;
+}
+.markdown-rendered td,
+.markdown-rendered th {
+  background: var(--my-color-base-00);
+}
+.theme-dark .mermaid {
+  background: var(--my-color-base-00);
+}
+.is-focused .workspace-leaf.mod-active .view-header {
+  background-color: #00000000;
+}
+.workspace-tab-header.is-active {
+  background-color: var(--my-color-base-00);
+}
+.workspace-split.mod-root .view-content {
+  background-color: var(--my-color-base-00);
+}
+.theme-dark {
+  --my-color-base-00: #110f20c9;
+}
+.status-bar {
+  background-color: var(--my-color-base-00);
+}
