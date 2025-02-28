@@ -194,7 +194,7 @@ body.theme-dark {
 
 body:not(.is-mobile) .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
   border-radius: var(--anp-card-radius, var(--radius-xl));
-  background-color: #110f20c9 !important;
+  background-color: var(--my-color-base-00) !important;
   margin-top: 1px;
 }
 
@@ -242,11 +242,11 @@ settings:
 body.anp-card-layout .workspace-split .workspace-leaf-content:not([data-type=file-explorer]),
 body.anp-card-layout.anp-card-layout-filebrowser .workspace-leaf-content[data-type=file-explorer] {
   border-radius: var(--anp-card-radius, var(--radius-xl));
-  background-color: #110f20c9;
+  background-color: var(--my-color-base-00);
   border: 1px solid var(--tab-outline-color);
 }
 [data-type="file-explorer"] {
-  background-color: #110f20c9;
+  background-color: var(--my-color-base-00);
   border-radius: var(--anp-card-radius, var(--radius-xl));
   margin-bottom: 0px;
 }
@@ -268,16 +268,20 @@ body.anp-card-layout.anp-card-layout-filebrowser .workspace-leaf-content[data-ty
 }
 body {
   --graph-line: #8a5cf5c1;
-  --table-background: var(--my-color-base-00);
+  --table-background: var(--my-color-base-10);
   --tab-background-active: none;
+  --search-result-background: var(--my-color-base-10);
+  --background-modifier-form-field: var(--my-color-base-10)!important;
 }
+
 .markdown-rendered td,
 .markdown-rendered th {
-  background: var(--my-color-base-00);
+  background: var(--my-color-base-10);
 }
 .theme-dark .mermaid {
-  background: var(--my-color-base-00);
+  background: var(--my-color-base-10);
 }
+
 .is-focused .workspace-leaf.mod-active .view-header {
   background-color: #00000000;
 }
@@ -288,8 +292,52 @@ body {
   background-color: var(--my-color-base-00);
 }
 .theme-dark {
-  --my-color-base-00: #110f20c9;
+  --my-color-base-00: #110f20c9;/* 背景色 */
+  --my-color-base-10: #110f20c9;/* テーブル,mermaid等の背景色 */
+}
+.anp-background-image-toggle:not(.anp-colorful-frame){
+  --code-background: var(--my-color-base-10);
 }
 .status-bar {
   background-color: var(--my-color-base-00);
 }
+
+/* 表示幅の設定*/
+.markdown-source-view.is-readable-line-width .CodeMirror,
+.markdown-preview-view.is-readable-line-width .CodeMirror,
+.markdown-source-view.is-readable-line-width .markdown-preview-sizer,
+.markdown-preview-view.is-readable-line-width .markdown-preview-sizer {
+  max-width: 1200px;
+  margin: auto;
+}
+body {
+  --file-line-width: 1200px !important;
+}
+
+/*
+https://forum.obsidian.md/t/snippet-that-automatically-limits-picture-s-size/78719
+画像のサイズを自動的に制限するスニペット
+*/
+.image-embed img {
+	display: block;
+	max-width: 900px;
+	max-height: 900px;
+	width: auto;
+	height: auto;
+	margin: 1em auto 1em auto !important;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/*PDFビューアのスタイル*/
+.pdf-viewer .page {
+  box-sizing: content-box;
+  border-width: 0; /* 境界線をなくす */
+  border-style: solid; /* 他の border プロパティが残っている場合のために設定 */
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
