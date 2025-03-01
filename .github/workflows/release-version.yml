@@ -48,3 +48,13 @@ jobs:
           asset_path: ./theme.css
           asset_name: theme.css
           asset_content_type: text/css
+
+      - name: Package plugin
+        run: |
+          THEME_NAME="Divergences"
+          mkdir "$THEME_NAME"
+          cp ./manifest.json "$THEME_NAME/"
+          cp ./theme.css "$THEME_NAME/"
+          cp styles.css "$THEME_NAME/"
+          zip -r "$THEME_NAME.zip" "$THEME_NAME/"
+
