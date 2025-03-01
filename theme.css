@@ -270,10 +270,15 @@ body {
   --graph-line: #8a5cf5c1;
   --table-background: var(--my-color-base-10);
   --tab-background-active: none;
-  --search-result-background: var(--my-color-base-10);
-  --background-modifier-form-field: var(--my-color-base-10)!important;
 }
 
+  input.wb-search-bar{
+    background-color: var(--my-color-base-10);
+  }
+
+  input.wb-page-search-bar-input{
+    background-color: var(--my-color-base-10);
+  }
 .markdown-rendered td,
 .markdown-rendered th {
   background: var(--my-color-base-10);
