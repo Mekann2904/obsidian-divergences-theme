@@ -2,9 +2,8 @@ name: Publish new theme version
 
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
-      - "*" # Push events to matching any tag format, i.e. 1.0, 20.15.10
+      - "*" # タグがプッシュされたら実行
 
 jobs:
   build:
@@ -12,24 +11,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Bundle
-        id: bundle
-        run: |
-          ls
-          echo "::set-output name=tag_name::$(git tag --sort version:refname | tail -n 1)"
+      
+      - name: Set tag name
+        run: echo "TAG_NAME=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ github.ref }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
+
       - name: Upload manifest.json
-        id: upload-manifest
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,8 +35,8 @@ jobs:
           asset_path: ./manifest.json
           asset_name: manifest.json
           asset_content_type: application/json
+
       - name: Upload theme.css
-        id: upload-css
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,12 +46,23 @@ jobs:
           asset_name: theme.css
           asset_content_type: text/css
 
-      - name: Package plugin
+      - name: Package theme
         run: |
           THEME_NAME="Divergences"
           mkdir "$THEME_NAME"
           cp ./manifest.json "$THEME_NAME/"
           cp ./theme.css "$THEME_NAME/"
-          cp styles.css "$THEME_NAME/"
+          if [ -f styles.css ]; then
+            cp styles.css "$THEME_NAME/"
+          fi
           zip -r "$THEME_NAME.zip" "$THEME_NAME/"
 
+      - name: Upload packaged theme
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./Divergences.zip
+          asset_name: Divergences.zip
+          asset_content_type: application/zip
