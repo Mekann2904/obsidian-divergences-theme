@@ -346,3 +346,14 @@ https://forum.obsidian.md/t/snippet-that-automatically-limits-picture-s-size/787
   margin: 0 auto;
 }
 
+
+/*2025-05-05の作業
+https://forum.obsidian.md/t/size-of-youtube-video/75030/6
+*/
+
+iframe[src*="youtu"] {
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+}
+
