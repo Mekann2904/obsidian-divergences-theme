@@ -357,3 +357,8 @@ iframe[src*="youtu"] {
     border-radius: 10px;
 }
 
+/* Stacked Tabsのスクロールバーを非表示に*/
+.workspace-tabs.mod-stacked ::-webkit-scrollbar {
+  display: none;
+}
+
