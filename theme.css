@@ -107,7 +107,7 @@ settings:
     markdown: true
 */
 
-/* 背景＆フィルター設定 */
+/* 背景＆フィルター設定 フォールバック設定 */
 body.theme-dark {
   --anp-background-image: var(--anp-background-image-dark);
   --anp-custom-bg-brightness: var(--anp-custom-bg-brightness-dark);
@@ -115,6 +115,15 @@ body.theme-dark {
   --anp-custom-bg-card-fg-opacity: var(--anp-custom-bg-card-fg-opacity-dark);
   --background-base: 30, 30, 46;
   --background-mantle: 24, 24, 37;
+  --filter-color-r: 0;
+  --filter-color-g: 6;
+  --filter-color-b: 255;
+  --filter-gradient-start-r: 0;
+  --filter-gradient-start-g: 0;
+  --filter-gradient-start-b: 0;
+  --filter-gradient-end-r: 0;
+  --filter-gradient-end-g: 0;
+  --filter-gradient-end-b: 0;
 }
 
 /* カスタム背景画像とフィルター適用（背景画像部分のみ対象） */
