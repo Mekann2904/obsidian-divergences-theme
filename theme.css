@@ -149,9 +149,19 @@ body.theme-dark {
       blur(var(--anp-custom-bg-blur, 5px));
     background-color: transparent;
   }
-  .workspace {
-    background: transparent;
-  }
+  .workspace-split{
+    background:transparent;
+}
+
+  .workspace-tabs .workspace-leaf {
+    background-color: transparent;
+}
+/*
+  .workspace-ribbon{
+  background-color: var(--my-color-base-00);
+}
+*/
+
   --card-background-color: transparent;
   --card-foreground-color: rgba(
     var(--background-base),
